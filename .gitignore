@@ -12,6 +12,7 @@ build/
 # Spring Boot
 application-local.properties
 application-dev.properties
+/src/main/resources/application.properties
 
 # IDE - IntelliJ IDEA
 .idea/
@@ -60,3 +61,4 @@ dist/
 # Build outputs
 /build
 /dist
+
