@@ -14,9 +14,17 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table (name = "members")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member {
   @Id
   @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -31,7 +39,7 @@ public class Member {
   private String photoUrl;
 
   @Enumerated(EnumType.STRING)
-  private BeltRank beltRank;    
+  private BeltRank beltRank;
 
   @Enumerated(EnumType.STRING)
   private MembershipType membershipType;
