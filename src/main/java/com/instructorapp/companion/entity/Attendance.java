@@ -8,8 +8,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "attendance")
 public class Attendance {
@@ -23,6 +31,6 @@ public class Attendance {
   private Member member;
 
   @Column(nullable = false)
-  private LocalDateTime attendanceDate;
+  private LocalDate attendanceDate;
 
 }
