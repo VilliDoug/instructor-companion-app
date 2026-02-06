@@ -77,3 +77,36 @@ Claudeに相談をしながら、エンドポイント名のベストプラク�
 楽しい。
 
 次は　POST・PUT　HTTPメソッド。
+
+---
+
+***2026年2月6日***
+
+#### 1. オブジェクト修正
+
+Member　→　lineId　追加しました。
+- ジムでは会員との連絡・運営は全てLINEでやっているので、LINE　IDが必要。
+
+MemberDTO ・　MemberDetailDTO　バリエーション(@NotBlank / @NotNull)実装しました。
+- 「POST・PUT」新規会員登録の時バリエーション機能を実装。
+
+#### 2. MemberMapper
+
+Serviceコードが長くて、そのままにしていくとコードが読みにくく、早いうちにMapperを実装しました。
+- Mapperクラス
+ - Entity ⇐⇒　DTO　のコンバーターメソッドを実装。 
+
+#### 3.　POST　メソッド
+
+@Transactional アノテーションを使用したPOSTメソッドを実装。
+
+Postmanを使って、【GET・GET（ID）・POST】の動作確認済み！
+
+GET成功した場合　"200"　（ResponseEntity.ok）、
+POST成功した場合　"201"　（ResponseEntity.status(HttpStatus.CREATED)) →　初めて。
+
+例外処理は今度から実装する予定です。
+
+今日の日報は短いですが、明日また頑張ります！
+
+---
