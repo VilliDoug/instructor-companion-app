@@ -1,6 +1,7 @@
 package com.instructorapp.companion.dto;
 
 import com.instructorapp.companion.enums.MembershipType;
+import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MemberDetailDTO {
   private Long id;
+  @NotBlank(message = "Name is required")
   private String name;
+  @NotBlank(message = "Membership type is required")
   private MembershipType membershipType;
   private boolean paymentStatus;
   private List<LocalDate> attendanceDates;
