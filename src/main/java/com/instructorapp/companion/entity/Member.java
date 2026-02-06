@@ -33,6 +33,7 @@ public class Member {
   private String furigana;
   private LocalDate dateOfBirth;
   private String phone;
+  private String lineId;
   @Email
   @Column(unique = true)
   private String email;
