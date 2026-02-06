@@ -3,10 +3,15 @@ package com.instructorapp.companion.controller;
 import com.instructorapp.companion.dto.MemberDTO;
 import com.instructorapp.companion.dto.MemberDetailDTO;
 import com.instructorapp.companion.service.MemberService;
+import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,5 +36,17 @@ public class MemberController {
     MemberDetailDTO details = memberService.getMemberDetails(id);
     return ResponseEntity.ok(details);
   }
+
+  @PostMapping
+  public ResponseEntity<MemberDTO> createMember(@Valid @RequestBody MemberDTO memberDTO) {
+    MemberDTO created = memberService.createMember(memberDTO);
+    return ResponseEntity.status(HttpStatus.CREATED).body(created);
+  }
+
+//  @PutMapping("/{id}")
+//  public ResponseEntity<MemberDTO> updateMember(@PathVariable Long id, @Valid @RequestBody MemberDTO memberDTO) {
+//    MemberDTO updated = memberService.updateMember(id, memberDTO);
+//    return ResponseEntity.status(HttpStatus.OK).body(updated);
+//  }
 
 }
