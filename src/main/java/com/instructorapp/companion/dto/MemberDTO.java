@@ -23,6 +23,7 @@ public class MemberDTO {
     @NotBlank(message = "Name is required")
     private String name;
     private String furigana;
+    private String alphabetName;
     private LocalDate dateOfBirth;
     private String phone;
     @NotBlank(message = "LINE ID is required")
@@ -33,8 +34,9 @@ public class MemberDTO {
     private BeltRank beltRank;
     @NotNull(message = "Membership type is required")
     private MembershipType membershipType;
+    private boolean staff;
     private boolean paymentStatus;
-    private boolean isActive;
+    private boolean active;
     private LocalDate joinedAt;
     private LocalDate updatedAt;
 }
