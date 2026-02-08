@@ -43,10 +43,10 @@ public class MemberController {
     return ResponseEntity.status(HttpStatus.CREATED).body(created);
   }
 
-//  @PutMapping("/{id}")
-//  public ResponseEntity<MemberDTO> updateMember(@PathVariable Long id, @Valid @RequestBody MemberDTO memberDTO) {
-//    MemberDTO updated = memberService.updateMember(id, memberDTO);
-//    return ResponseEntity.status(HttpStatus.OK).body(updated);
-//  }
+  @PutMapping("/{id}")
+  public ResponseEntity<MemberDTO> updateMember(@PathVariable Long id, @Valid @RequestBody MemberDTO memberDTO) {
+    MemberDTO updated = memberService.updateMember(id, memberDTO);
+    return ResponseEntity.ok(updated);
+  }
 
 }
