@@ -57,8 +57,10 @@ public class MemberService {
     MemberDetailDTO dto = new MemberDetailDTO();
     dto.setId(member.getId());
     dto.setName(member.getName());
+    dto.setAlphabetName(member.getAlphabetName());
     dto.setMembershipType(member.getMembershipType());
     dto.setPaymentStatus(member.isPaymentStatus());
+    dto.setActive(member.isActive());
     dto.setAttendanceDates(attendancesThisMonth.stream()
         .map(Attendance::getAttendanceDate)
         .toList());
@@ -92,5 +94,13 @@ public class MemberService {
     member.setActive(dto.isActive());
     Member updatedMember = memberRepository.save(member);
     return memberMapper.toDTO(updatedMember);
+  }
+
+  @Transactional
+  public MemberDTO deleteMember(Long id) {
+    Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("Member not found"));
+    member.setActive(false);
+    Member deletedMember = memberRepository.save(member);
+    return memberMapper.toDTO(deletedMember);
   }
 }
