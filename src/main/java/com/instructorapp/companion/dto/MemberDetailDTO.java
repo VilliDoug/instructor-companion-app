@@ -20,6 +20,7 @@ public class MemberDetailDTO {
   private Long id;
   @NotBlank(message = "Name is required")
   private String name;
+  private String alphabetName;
   @NotBlank(message = "Membership type is required")
   private MembershipType membershipType;
   private boolean paymentStatus;
