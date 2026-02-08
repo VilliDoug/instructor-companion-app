@@ -103,4 +103,11 @@ public class MemberService {
     Member deletedMember = memberRepository.save(member);
     return memberMapper.toDTO(deletedMember);
   }
+
+  public List<MemberDTO> getActiveMembers() {
+    List<Member> members = memberRepository.findByActiveTrue();
+    return members.stream()
+        .map(memberMapper::toDTO)
+        .toList();
+  }
 }
