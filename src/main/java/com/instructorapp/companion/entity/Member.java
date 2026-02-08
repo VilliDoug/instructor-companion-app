@@ -31,6 +31,7 @@ public class Member {
   private Long id;
   private String name;
   private String furigana;
+  private String alphabetName;
   private LocalDate dateOfBirth;
   private String phone;
   private String lineId;
@@ -44,8 +45,9 @@ public class Member {
 
   @Enumerated(EnumType.STRING)
   private MembershipType membershipType;
+  private boolean staff;
   private boolean paymentStatus;
-  private boolean isActive;
+  private boolean active;
   @Column(nullable = false, updatable = false)
   private LocalDate joinedAt;
   private LocalDate updatedAt;
