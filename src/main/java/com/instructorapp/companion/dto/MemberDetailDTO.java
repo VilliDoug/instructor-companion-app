@@ -24,6 +24,7 @@ public class MemberDetailDTO {
   @NotBlank(message = "Membership type is required")
   private MembershipType membershipType;
   private boolean paymentStatus;
+  private boolean active;
   private List<LocalDate> attendanceDates;
   private int attendanceThisMonth;
   private boolean overCount;
