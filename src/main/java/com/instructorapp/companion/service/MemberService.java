@@ -74,21 +74,23 @@ public class MemberService {
     return memberMapper.toDTO(savedMember);
   }
 
-//  @Transactional
-//  public MemberDTO updateMember(Long id, MemberDTO dto) {
-//    Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("Member not found"));
-//    member.setName(dto.getName());
-//    member.setFurigana(dto.getFurigana());
-//    member.setDateOfBirth(dto.getDateOfBirth());
-//    member.setPhone(dto.getPhone());
-//    member.setLineId(dto.getLineId());
-//    member.setEmail(dto.getEmail());
-//    member.setPhotoUrl(dto.getPhotoUrl());
-//    member.setBeltRank(dto.getBeltRank());
-//    member.setMembershipType(dto.getMembershipType());
-//    member.setPaymentStatus(dto.isPaymentStatus());
-//    member.setActive(dto.isActive());
-//
-//    return memberMapper.toDTO(member);
-//  }
+  @Transactional
+  public MemberDTO updateMember(Long id, MemberDTO dto) {
+    Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("Member not found"));
+    member.setName(dto.getName());
+    member.setFurigana(dto.getFurigana());
+    member.setAlphabetName(dto.getAlphabetName());
+    member.setDateOfBirth(dto.getDateOfBirth());
+    member.setPhone(dto.getPhone());
+    member.setLineId(dto.getLineId());
+    member.setEmail(dto.getEmail());
+    member.setPhotoUrl(dto.getPhotoUrl());
+    member.setBeltRank(dto.getBeltRank());
+    member.setMembershipType(dto.getMembershipType());
+    member.setStaff(dto.isStaff());
+    member.setPaymentStatus(dto.isPaymentStatus());
+    member.setActive(dto.isActive());
+    Member updatedMember = memberRepository.save(member);
+    return memberMapper.toDTO(updatedMember);
+  }
 }
