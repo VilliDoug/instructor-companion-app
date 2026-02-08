@@ -47,7 +47,7 @@ public class Member {
   private MembershipType membershipType;
   private boolean staff;
   private boolean paymentStatus;
-  private boolean active;
+  private boolean active = true;
   @Column(nullable = false, updatable = false)
   private LocalDate joinedAt;
   private LocalDate updatedAt;
