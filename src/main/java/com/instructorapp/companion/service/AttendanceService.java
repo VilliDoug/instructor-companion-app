@@ -55,5 +55,12 @@ public class AttendanceService {
     return memberService.getMemberDetails(memberId);
   }
 
+  public void removeAttendance(Long memberId, LocalDate date) {
+    Attendance attendance = attendanceRepository
+        .findByMemberIdAndAttendanceDate(memberId, date)
+        .orElseThrow(() -> new RuntimeException("Attendance not found"));
+    attendanceRepository.delete(attendance);
+  }
+
 
 }
