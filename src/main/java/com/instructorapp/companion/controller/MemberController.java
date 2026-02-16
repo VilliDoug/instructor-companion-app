@@ -61,8 +61,11 @@ public class MemberController {
   }
 
   @PostMapping("/{id}/attendance")
-  public ResponseEntity<MemberDetailDTO> markAttendance(@PathVariable Long id) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(attendanceService.markAttendance(id));
+  public ResponseEntity<MemberDetailDTO> markAttendance(
+      @PathVariable Long id,
+      @RequestParam(required = false, defaultValue = "false") boolean wasInstructor
+  ) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(attendanceService.markAttendance(id, wasInstructor));
   }
 
 }
