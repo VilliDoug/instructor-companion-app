@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import '../styles/Layout.scss';
+import { Link } from "react-router-dom";
 
 interface LayoutProps {
     children: ReactNode;
@@ -20,9 +21,9 @@ export default function Layout ({ children }: LayoutProps) {
                 {/* Sidenav */}
                 <nav className="app-sidenav">
                     <ul>
-                        <li><a href="/">ホーム</a></li>
-                        <li><a href="/members">会員一覧</a></li>
-                        <li><a href="/attendance">参加管理</a></li>
+                        <li><Link to="/">ホーム</Link></li>
+                        <li><Link to="/members">会員一覧</Link></li>
+                        <li><Link to="/attendance">参加管理</Link></li>
                     </ul>
                 </nav>
 
