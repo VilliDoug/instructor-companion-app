@@ -1,22 +1,22 @@
 @use './variables' as *;
 
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: $font-family;
-    background-color: $bg-main;
-    color: $text-primary;
-    font-size: $font-size-base;
-    line-height: 1.6;
+  font-family: $font-family;
+  background-color: $bg-main;
+  color: $text-primary;
+  font-size: $font-size-base;
+  line-height: 1.6;
 }
 
-// Basic utilities
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: $spacing-lg;
-}
+// .container {
+//     max-width: 1200px;
+//     margin: 0 auto;
+//     padding: $spacing-lg;
+// }
