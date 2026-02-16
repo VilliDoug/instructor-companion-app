@@ -4,17 +4,11 @@ import { memberService } from "../services/memberService";
 import '../styles/MembersListPage.scss';
 
 export default function MemberListPage() {
-    // TODO: add state here
-    // -members list
     const [members, setMembers] = useState<MemberDTO[]>([]);
-    // -search term
     const [searchTerm, setSearchTerm] = useState<string>('');
-    // -expanded member ID
     const [expandedMemberId, setExpandedMemberId] = useState<number | null>(null);
-    // editing member ID
     const [editingMemberId, setEditingMemberId] = useState<number | null>(null);
 
-    // TODO: Fetch members on component mount
     const fetchMembers = async () => {
         const response = await memberService.getAllMembers();
         setMembers(response.data);
@@ -23,6 +17,17 @@ export default function MemberListPage() {
   useEffect(() => {
     fetchMembers();
   }, []);
+
+const filterMembers = members.filter((m) => {
+    if (!searchTerm) return true;
+
+    const search = searchTerm.toLowerCase();
+    const matchesName = m.name.toLowerCase().includes(search);
+    const matchesFurigana = m.furigana?.toLowerCase().includes(search);
+    const matchesAlphabet = m.alphabetName?.toLowerCase().includes(search);
+
+    return matchesName || matchesFurigana || matchesAlphabet;    
+});
 
   const getMembershipTypeLabel = (type: string) => {
     switch(type) {
@@ -60,7 +65,11 @@ export default function MemberListPage() {
                     <div>支払状況</div>
                 </div>
 
-                {members.map(member => (
+                {filterMembers.length === 0 ? (
+                    <div className="no-results">
+                        検索結果が見つかりませんでした
+                    </div>
+                ) : ( filterMembers.map(member => (
                     <div key={member.id}>
                     <div className={`member-row ${expandedMemberId === member.id ? 'expanded' : ''}`}>
                         {/* Expand arrow */}
@@ -187,7 +196,8 @@ export default function MemberListPage() {
                             </div>
                         )}
                     </div>
-                ))}
+                ))
+                )}
             </div>
         </div>
     )

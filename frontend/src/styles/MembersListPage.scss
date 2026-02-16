@@ -34,11 +34,19 @@
     border-radius: $border-radius-md;
     overflow: hidden;
     box-shadow: $shadow-sm;
+    min-height: 500px;
+  }
+
+  .no-results {
+    padding: $spacing-xl;
+    text-align: center;
+    color: $text-secondary;
+    font-size: $font-size-lg;
   }
 
   .table-header {
     display: grid;
-    grid-template-columns: 40px 80px 50px 1fr 1fr 1fr 140px 120px;
+    grid-template-columns: 40px 80px 50px minmax(150px, 1fr) minmax(120px, 1fr) minmax(150px, 1fr) 140px 120px;
     gap: $spacing-sm;
     padding: $spacing-md;
     background: $bg-dark;
@@ -50,7 +58,7 @@
 
   .member-row {
     display: grid;
-    grid-template-columns: 40px 80px 50px 1fr 1fr 1fr 140px 120px;
+    grid-template-columns: 40px 80px 50px minmax(150px, 1fr) minmax(120px, 1fr) minmax(150px, 1fr) 140px 120px;
     gap: $spacing-sm;
     padding: $spacing-md;
     border-bottom: 1px solid $border-color;
