@@ -40,7 +40,7 @@ public class AttendanceService {
   }
 
   @Transactional
-  public MemberDetailDTO markAttendance(Long memberId) {
+  public MemberDetailDTO markAttendance(Long memberId, boolean wasInstructor) {
     Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new RuntimeException("Member not found"));
     LocalDate today = LocalDate.now();
@@ -51,6 +51,7 @@ public class AttendanceService {
     Attendance attendance = new Attendance();
     attendance.setMember(member);
     attendance.setAttendanceDate(today);
+    attendance.setWasInstructor(wasInstructor);
     attendanceRepository.save(attendance);
     return memberService.getMemberDetails(memberId);
   }
