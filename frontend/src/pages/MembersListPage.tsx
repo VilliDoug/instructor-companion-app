@@ -1,43 +1,15 @@
-import { useState, useEffect } from "react";
-import { MemberDTO } from "../types/Member";
-import { memberService } from "../services/memberService";
 import '../styles/MembersListPage.scss';
+import { useMembersList } from "../hooks/useMembersList";
 
 export default function MemberListPage() {
-    const [members, setMembers] = useState<MemberDTO[]>([]);
-    const [searchTerm, setSearchTerm] = useState<string>('');
-    const [expandedMemberId, setExpandedMemberId] = useState<number | null>(null);
-    const [editingMemberId, setEditingMemberId] = useState<number | null>(null);
-
-    const fetchMembers = async () => {
-        const response = await memberService.getAllMembers();
-        setMembers(response.data);
-  }
-
-  useEffect(() => {
-    fetchMembers();
-  }, []);
-
-const filterMembers = members.filter((m) => {
-    if (!searchTerm) return true;
-
-    const search = searchTerm.toLowerCase();
-    const matchesName = m.name.toLowerCase().includes(search);
-    const matchesFurigana = m.furigana?.toLowerCase().includes(search);
-    const matchesAlphabet = m.alphabetName?.toLowerCase().includes(search);
-
-    return matchesName || matchesFurigana || matchesAlphabet;    
-});
-
-  const getMembershipTypeLabel = (type: string) => {
-    switch(type) {
-        case 'FULL_CLASS': return 'フルクラス';
-        case 'EIGHT_DAYS': return '8デイズ';
-        case 'FOUR_DAYS': return '4デイズ';
-        case 'ON_HIATUS': return '休会中';
-        default: return type;
-    }
-  };
+    const {
+        filterMembers,
+        searchTerm,
+        setSearchTerm,
+        expandedMemberId,
+        setExpandedMemberId,
+        getMembershipTypeLabel,
+    } = useMembersList();
 
     return (
         <div className="members-list-page">
@@ -69,6 +41,7 @@ const filterMembers = members.filter((m) => {
                     <div className="no-results">
                         検索結果が見つかりませんでした
                     </div>
+                    // CHECK THIS ONE
                 ) : ( filterMembers.map(member => (
                     <div key={member.id}>
                     <div className={`member-row ${expandedMemberId === member.id ? 'expanded' : ''}`}>
