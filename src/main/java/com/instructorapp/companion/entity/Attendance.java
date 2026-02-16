@@ -33,4 +33,7 @@ public class Attendance {
   @Column(nullable = false)
   private LocalDate attendanceDate;
 
+  @Column(name = "was_instructor")
+  private boolean wasInstructor;
+
 }
