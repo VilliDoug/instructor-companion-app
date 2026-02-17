@@ -1,5 +1,6 @@
 import '../styles/MembersListPage.scss';
 import { useMembersList } from "../hooks/useMembersList";
+import { MemberDTO } from '../types/Member';
 
 export default function MemberListPage() {
     const {
@@ -41,8 +42,7 @@ export default function MemberListPage() {
                     <div className="no-results">
                         検索結果が見つかりませんでした
                     </div>
-                    // CHECK THIS ONE
-                ) : ( filterMembers.map(member => (
+                ) : ( filterMembers.map((member: MemberDTO) => (
                     <div key={member.id}>
                     <div className={`member-row ${expandedMemberId === member.id ? 'expanded' : ''}`}>
                         {/* Expand arrow */}
@@ -57,7 +57,13 @@ export default function MemberListPage() {
                         <div className="member-photo">
                             <img
                             src={member.photoUrl}
-                            alt={member.name}                            
+                            alt={member.name} 
+                            onError={(e) => {
+  e.currentTarget.src =
+   'https://ui-avatars.com/api/?name='
+    + member.name
+    + '&size=80&background=e5e5e5&color=333333';
+}}                           
                             />
                         </div>
 
@@ -93,7 +99,13 @@ export default function MemberListPage() {
                             <div className="member-details">
                                 <div className="details-content">
                                     <div className="details-photo">
-                                        <img src={member.photoUrl} alt={member.name} />
+                                        <img src={member.photoUrl} alt={member.name} 
+                                        onError={(e) => {
+  e.currentTarget.src =
+   'https://ui-avatars.com/api/?name='
+    + member.name
+    + '&size=80&background=e5e5e5&color=333333';
+}} />
                                     </div>
                                     <div className="details-info">
                                         <div className="info-row">
