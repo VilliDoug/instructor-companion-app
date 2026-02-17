@@ -13,7 +13,6 @@ function App() {
           <Route path="/members" element={<MemberListPage />} />
           <Route path="/attendance" element={<TodaysClassPage />} />
         </Routes>
-        <MemberListPage />
       </Layout>
     </BrowserRouter>
   );
