@@ -4,10 +4,13 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    width: 100vw;
+    position: relative;
 }
 
 // Header
 .app-header {
+    width: 100%;
     background: $color-black;
     color: $color-white;
     padding: $spacing-md $spacing-lg;
@@ -51,6 +54,8 @@
 .app-main {
     display: flex;
     flex: 1;
+    width: 100%;
+    overflow: hidden;
 }
 
 // sidenav
@@ -59,6 +64,7 @@
     background: $color-dark-grey;
     color: $color-white;
     padding: $spacing-lg;
+    overflow-y: auto;
 
     ul {
         list-style: none;
@@ -93,11 +99,14 @@
 .app-content {
     flex: 1;
     background: $bg-main;
+    overflow-x: hidden;
+    min-width: 0;
     overflow-y: auto;
 }
 
 // footer
 .app-footer {
+    width: 100%;
     background: $color-dark-grey;
     color: $color-white;
     padding: $spacing-lg;
