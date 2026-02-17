@@ -1,4 +1,6 @@
+import '../styles/TodaysClassPage.scss';
 import { useTodaysClass } from "../hooks/useTodaysClass";
+import { MemberDTO } from "../types/Member";
 
 export default function TodaysClassPage() {
     const {
@@ -7,8 +9,11 @@ export default function TodaysClassPage() {
         selectedMemberId,
         handleCardClick,
         handleRemoveAttendance,
-    } = useTodaysClass();
-    
+        handleAttendClick,
+        searchTerm,
+        setSearchTerm,
+        filterMembers,
+    } = useTodaysClass();    
 
     return (
         <div className="todays-class-page">
@@ -25,14 +30,14 @@ export default function TodaysClassPage() {
             <div className="class-container">
                 {/* left sidebar - attended members */}
                 <aside className="attended-sidebar">
-                    <h2>出席者 ({attendedMembers.length})</h2>
-                    <ul>
+                    <h2>出席者 ({attendedMembers.length}名)</h2>
+                    <ul className="attended-list">
                         {/* TODO list of attended members */}
-                        {attendedMembers.map(member => (
-                            <li key={member.id} className="attended-member">
-                                <div className="member-info">
-                                    <span className="name">{member.name}</span>
-                                    <span className="furigana">{member.furigana}</span>
+                        {attendedMembers.map((member: MemberDTO) =>  (
+                            <li key={member.id} className="attended-item">
+                                <div className="attended-info">
+                                    <span className="attended-name">{member.name}</span>
+                                    <span className="attended-furigana">{member.furigana}</span>
                                 </div>
                                 <button className="remove-btn"
                                 onClick={() => handleRemoveAttendance(member.id)}
@@ -46,24 +51,58 @@ export default function TodaysClassPage() {
 
                 {/* main area - member cards */}
                 <div className="member-cards-area">
+                    <div className="search-bar">
+                        <input
+                        type="text"
+                        placeholder='会員を検索'
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)} />
+                    </div>
                     <div className="cards-grid">
                         {/* TODO display member cards */}
-                        {allMembers.map(member => {
+                        {filterMembers.map((member: MemberDTO) => {
                             const hasAttended = attendedMembers.some(m => m.id === member.id);
                             const isSelected = selectedMemberId === member.id;
 
                             return (
                                 <div
                                 key={member.id}
-                                className={`member-card ${hasAttended ? 'attended' : ''} ${isSelected ? 'selected' : ''}`}
+                                className={`member-card
+                                    ${hasAttended ? 'attended' : ''}
+                                    ${isSelected ? 'selected' : ''}
+                                `}
                                 onClick={() => handleCardClick(member.id)}
                                 >
-                                    <img src={member.photoUrl} alt={member.name} />
-                                    <div className="card-info">
-                                        {member.name && <p className="name-kanji">{member.name}</p>}
-                                        {member.furigana && <p className="name-furigana">{member.furigana}</p>}
-                                        {!member.name && <p className="name-alphabet">{member.alphabetName}</p>}
+                                    <div className="card-photo">
+                                        <img
+                                     src={member.photoUrl}
+                                     alt={member.name}
+                                     onError={(e) => {
+  e.currentTarget.src =
+   'https://ui-avatars.com/api/?name='
+    + member.name
+    + '&size=80&background=e5e5e5&color=333333';
+}}
+                                    />
                                     </div>
+                                    
+                                    <div className="card-info">
+                                        {member.name
+                                        ? <>
+                                        <p className="name-kanji">{member.name}</p>
+                                        <p className="name-furigana">{member.furigana}</p>
+                                        </>
+                                        : <p className="name-alphabet">{member.alphabetName}</p>
+                                        }                                        
+                                    </div>
+
+                                    {/* attend button - shows when selected */}
+                                    {isSelected && !hasAttended && (
+                                        <button className="attend-btn"
+                                        onClick={(e) => handleAttendClick(member.id, e)}>
+                                            出席
+                                        </button>
+                                    )}
                                 </div>
                             );
                         })}

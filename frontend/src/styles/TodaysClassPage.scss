@@ -1,0 +1,202 @@
+@use './variables' as *;
+
+.todays-class-page {
+    padding: $spacing-lg;
+
+    h1 {
+        font-size: $font-size-xxl;
+        font-weight: $font-weight-bold;
+        margin-bottom: $spacing-xs;
+    }
+
+    .date {
+        color: $text-secondary;
+        font-size: $font-size-base;
+        margin-bottom: $spacing-lg;
+    }
+
+    // main container - sidebar + cards
+    .class-container {
+        display: flex;
+        gap: $spacing-lg;
+        padding-top: $spacing-sm;
+        align-items: flex-start;
+    }
+
+    // left sidebar
+    .attended-sidebar {
+        width: 220px;
+        flex-shrink: 0;
+        background: $bg-card;
+        border-radius: $border-radius-md;
+        padding: $spacing-md;
+        box-shadow: $shadow-sm;
+        position: sticky;
+        top: $spacing-lg;
+
+        h2 {
+            font-size: $font-size-lg;
+            font-weight: $font-weight-bold;
+            margin-bottom: $spacing-md;
+            padding-bottom: $spacing-sm;
+            border-bottom: 2px solid $color-black;
+        }
+
+        .attended-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+        }
+
+        .attended-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: $spacing-sm;
+            background: $color-off-white;
+            border-radius: $border-radius-sm;
+
+            .attended-info {
+                display: flex;
+                flex-direction: column;
+
+                .attended-name {
+                    font-weight: $font-weight-bold;
+                    font-size: $font-size-base;
+                }
+
+                .attended-furigana {
+                    font-style: $font-size-sm;
+                    color: $text-secondary;
+                }
+            }
+
+            .remove-btn {
+                padding: 4px 10px;
+                background: $color-danger;
+                color: $color-white;
+                border: none;
+                border-radius: $border-radius-sm;
+                cursor: pointer;
+                font-size: $font-size-sm;
+                transition: background $transition-fast;
+                flex-shrink: 0;
+
+                &:hover {
+                    background: darken($color: #DC2626, $amount: 10%);
+                }
+            }
+        }
+    }
+
+    // cards area
+    .member-cards-area {
+        flex: 1;
+        min-width: 0;
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: $spacing-md;
+            padding: $spacing-sm;
+        }
+    }
+
+    // individual card
+    .member-card {
+        background: $bg-card;
+        border-radius: $border-radius-md;
+        padding: $spacing-md;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $spacing-sm;
+        cursor: pointer;
+        box-shadow: $shadow-sm;
+        transition: all $transition-base;
+        border: 2px solid transparent;
+        overflow: hidden;
+        height: 220px;
+        justify-content: center;
+
+        &:hover {
+            box-shadow: $shadow-md;
+            border-color: $color-light-grey;
+        }
+
+        // selected state - glowing border
+        &.selected {
+            border-color: $color-black;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+        }
+
+        // attended state - greyed out
+        &.attended {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+
+            &:hover {
+                box-shadow: $shadow-sm;
+                border-color: transparent;
+            }
+        }
+
+        .card-photo {
+            width: 80px;
+            height: 80px;
+            min-height: 80px;
+            flex-shrink: 0;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 2px solid $border-color;
+                display: block;
+            }
+        }
+
+        .card-info {
+            text-align: center;
+
+            .name-kanji {
+                font-weight: $font-weight-bold;
+                font-size: $font-size-base;
+            }
+
+            .name-furigana {
+                font-size: $font-size-sm;
+                color: $text-secondary;
+            }
+
+            .name-alphabet {
+                font-weight: $font-weight-bold;
+                font-size: $font-size-base;
+            }
+        }
+
+        // attend button
+        .attend-btn {
+            width: 100%;
+            padding: $spacing-xs $spacing-sm;
+            background: $color-black;
+            color: $color-white;
+            border: none;
+            border-radius: $border-radius-sm;
+            cursor: pointer;
+            font-size: $font-size-sm;
+            font-weight: $font-weight-medium;
+            transition: background $transition-fast;
+
+            &:hover {
+                background: $color-dark-grey;
+            }
+        }
+    }
+}

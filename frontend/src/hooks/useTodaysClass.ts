@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MemberDTO } from "../types/Member";
 import { memberService } from "../services/memberService";
 import { attendanceService } from "../services/attendanceService";
@@ -7,6 +7,7 @@ export function useTodaysClass() {
     const [allMembers, setAllMembers] = useState<MemberDTO[]>([]);
     const [attendedMembers, setAttendedMembers] = useState<MemberDTO[]>([]);
     const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
     useEffect(() => {
         fetchData();
@@ -33,8 +34,6 @@ export function useTodaysClass() {
             setSelectedMemberId(memberId);
             return;
         }
-
-        markAttendance(memberId);
     };
 
     const markAttendance = async (memberId: number) => {
@@ -48,9 +47,34 @@ export function useTodaysClass() {
         }
     };
 
+    const handleAttendClick = async (memberId: number, e: React.MouseEvent) => {
+        e.stopPropagation();
+        await markAttendance(memberId);
+    }
+
     const handleRemoveAttendance = async (memberId: number) => {
-        // TODO implement
+        try {
+            const today = new Date().toISOString().split('T')[0];
+            await attendanceService.removeAttendance(memberId, today);
+            await fetchData();            
+        } catch (error) {
+            console.error('Error removing attendance', error);
+            alert('出席の削除に失敗しました');
+        }
     };
+
+    const filterMembers = useMemo(() => {
+        return allMembers.filter((m) => {
+            if (!searchTerm) return true;
+
+            const search = searchTerm.toLowerCase();
+            return (
+                m.name.toLowerCase().includes(search) ||
+                m.furigana?.toLowerCase().includes(search) ||
+                m.alphabetName?.toLowerCase().includes(search)
+            );
+        })
+    }, [allMembers, searchTerm]);
 
     return {
         allMembers,
@@ -58,5 +82,9 @@ export function useTodaysClass() {
         selectedMemberId,
         handleCardClick,
         handleRemoveAttendance,
+        handleAttendClick,
+        filterMembers,
+        searchTerm,
+        setSearchTerm,
     };
 }
