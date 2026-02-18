@@ -97,6 +97,32 @@
         flex: 1;
         min-width: 0;
 
+        .search-bar {
+            margin-bottom: $spacing-md;
+            padding: 0 $spacing-sm;
+
+            input {
+                width: 100%;
+                max-width: 400px;
+                padding: $spacing-sm $spacing-md;
+                border: 2px solid $border-color;
+                border-radius: $border-radius-md;
+                background: $bg-card;
+                color: $color-black;
+                transition: all $transition-fast;
+
+                &::placeholder {
+                    color: $text-secondary;
+                }
+
+                &:focus {
+                    outline: none;
+                    border-color: $color-black;
+                    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+                }
+            }
+        }
+
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
