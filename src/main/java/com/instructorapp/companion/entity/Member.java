@@ -2,6 +2,7 @@ package com.instructorapp.companion.entity;
 
 import com.instructorapp.companion.enums.BeltRank;
 import com.instructorapp.companion.enums.MembershipType;
+import com.instructorapp.companion.enums.PaymentMethod;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -35,6 +36,7 @@ public class Member {
   private LocalDate dateOfBirth;
   private String phone;
   private String lineId;
+
   @Email
   @Column(unique = true)
   private String email;
@@ -46,8 +48,12 @@ public class Member {
   @Enumerated(EnumType.STRING)
   private MembershipType membershipType;
   private boolean staff;
+
+  @Enumerated(EnumType.STRING)
+  private PaymentMethod paymentMethod;
   private boolean paymentStatus;
   private boolean active = true;
+
   @Column(nullable = false, updatable = false)
   private LocalDate joinedAt;
   private LocalDate updatedAt;
