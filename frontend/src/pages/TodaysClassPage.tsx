@@ -1,6 +1,7 @@
 import '../styles/TodaysClassPage.scss';
 import { useTodaysClass } from "../hooks/useTodaysClass";
 import { MemberDTO } from "../types/Member";
+import Toast from '../components/Toast';
 
 export default function TodaysClassPage() {
     const {
@@ -12,7 +13,12 @@ export default function TodaysClassPage() {
         handleAttendClick,
         searchTerm,
         setSearchTerm,
+        selectedInstructor,
+        setSelectedInstructor,
         filterMembers,
+        staffMembers,
+        toast,
+        setToast,
     } = useTodaysClass();    
 
     return (
@@ -26,6 +32,21 @@ export default function TodaysClassPage() {
                     weekday: 'long'
                 })}
             </p>
+
+            <div className="instructor-selector">
+                <label htmlFor="instructor">本日のスタッフ:</label>
+                <select 
+                id="instructor"
+                value={selectedInstructor || ''}
+                onChange={(e) => setSelectedInstructor(Number(e.target.value) || null)}>
+                    <option value="">選択してください</option>
+                    {staffMembers.map(staff => (
+                        <option key={staff.id} value={staff.id}>
+                            {staff.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
 
             <div className="class-container">
                 {/* left sidebar - attended members */}
@@ -60,7 +81,12 @@ export default function TodaysClassPage() {
                     </div>
                     <div className="cards-grid">
                         {/* TODO display member cards */}
-                        {filterMembers.map((member: MemberDTO) => {
+                        {filterMembers.length === 0 ? (
+                            <div className="no-results">
+                                検索結果がみつかりませんでした
+                            </div>
+                        ) : (
+                        filterMembers.map((member: MemberDTO) => {
                             const hasAttended = attendedMembers.some(m => m.id === member.id);
                             const isSelected = selectedMemberId === member.id;
 
@@ -99,16 +125,25 @@ export default function TodaysClassPage() {
                                     {/* attend button - shows when selected */}
                                     {isSelected && !hasAttended && (
                                         <button className="attend-btn"
-                                        onClick={(e) => handleAttendClick(member.id, e)}>
+                                        onClick={(e) => handleAttendClick(member.id, e, member.id === selectedInstructor)}>
                                             出席
                                         </button>
                                     )}
+                                    
                                 </div>
                             );
-                        })}
+                        })
+                        )}
                     </div>
                 </div>
             </div>
+            {toast && (
+                                        <Toast
+                                        message={toast.message}
+                                        type={toast.type}
+                                        onClose={() => setToast(null)}
+                                        />
+                                    )}
         </div>
     )
 }

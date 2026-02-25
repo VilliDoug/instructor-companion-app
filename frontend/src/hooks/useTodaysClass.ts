@@ -8,6 +8,10 @@ export function useTodaysClass() {
     const [attendedMembers, setAttendedMembers] = useState<MemberDTO[]>([]);
     const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [toast, setToast] = useState<{
+        message: string;
+        type: 'success' | 'error';
+    } | null>(null);
 
     useEffect(() => {
         fetchData();
@@ -36,32 +40,38 @@ export function useTodaysClass() {
         }
     };
 
-    const markAttendance = async (memberId: number) => {
+    const markAttendance = async (memberId: number, isInstructor: boolean = false) => {
         try {
-            await attendanceService.markAttendance(memberId);
+            await attendanceService.markAttendance(memberId, isInstructor);
             await fetchData();
             setSelectedMemberId(null);
+            setToast({ message: '出席登録完了！', type: 'success'});
         } catch (error) {
             console.error('Error marking attendance:', error);
-            alert('出席登録に失敗しました');
+            setToast({ message: '出席登録に失敗しました', type: 'error'});
         }
     };
 
-    const handleAttendClick = async (memberId: number, e: React.MouseEvent) => {
+    const handleAttendClick = async (memberId: number, e: React.MouseEvent, isInstructor: boolean = false) => {
         e.stopPropagation();
-        await markAttendance(memberId);
+        await markAttendance(memberId, isInstructor);
     }
 
     const handleRemoveAttendance = async (memberId: number) => {
         try {
             const today = new Date().toISOString().split('T')[0];
             await attendanceService.removeAttendance(memberId, today);
-            await fetchData();            
+            await fetchData();  
+             setToast({ message: '出席を削除しました', type: 'success'});          
         } catch (error) {
             console.error('Error removing attendance', error);
-            alert('出席の削除に失敗しました');
+            setToast({ message: '削除に失敗しました', type: 'error'});
         }
     };
+
+    const [selectedInstructor, setSelectedInstructor] = useState<number | null>(null);
+
+    const staffMembers = allMembers.filter(m => m.staff);
 
     const filterMembers = useMemo(() => {
         return allMembers.filter((m) => {
@@ -84,7 +94,12 @@ export function useTodaysClass() {
         handleRemoveAttendance,
         handleAttendClick,
         filterMembers,
+        staffMembers,
+        selectedInstructor,
+        setSelectedInstructor,
         searchTerm,
         setSearchTerm,
+        toast,
+        setToast,
     };
 }

@@ -25,7 +25,7 @@
 
     // left sidebar
     .attended-sidebar {
-        width: 220px;
+        width: 250px;
         flex-shrink: 0;
         background: $bg-card;
         border-radius: $border-radius-md;
@@ -69,7 +69,7 @@
                 }
 
                 .attended-furigana {
-                    font-style: $font-size-sm;
+                    font-size: $font-size-sm;
                     color: $text-secondary;
                 }
             }
@@ -88,6 +88,39 @@
                 &:hover {
                     background: darken($color: #DC2626, $amount: 10%);
                 }
+            }
+        }
+    }
+
+    // staff selector
+    .instructor-selector {
+        margin-bottom: $spacing-lg;
+        padding: $spacing-md;
+        background: $bg-card;
+        border-radius: $border-radius-md;
+        box-shadow: $shadow-sm;
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+
+        label {
+            font-weight: $font-weight-bold;
+            color: $text-primary;
+        }
+
+        select {
+            padding: $spacing-sm $spacing-md;
+            border: 2px solid $border-color;
+            border-radius: $border-radius-sm;
+            font-size: $font-size-base;
+            font-family: $font-family;
+            cursor: pointer;
+            background: $color-white;
+            color: $text-primary;
+
+            &:focus {
+                outline: none;
+                border-color: $color-black;
             }
         }
     }
@@ -130,6 +163,14 @@
             padding: $spacing-sm;
         }
     }
+
+    .no-results {
+  grid-column: 1 / -1;  // Span all columns
+  text-align: center;
+  padding: $spacing-xl;
+  color: $text-secondary;
+  font-size: $font-size-lg;
+}
 
     // individual card
     .member-card {
